@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b0a">
+<meta name="description" content="CALISTHENIX — Build control. Build strength.">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" href="./icons/icon-192.png">
+<title>CALISTHENIX</title>
+<style>
+:root{--bg:#080b0a;--panel:#111815;--panel2:#19231e;--green:#35efa0;--text:#f1f7f3;--muted:#91a198;--border:#29382f;--gold:#f2cb78}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}
+.app{max-width:900px;margin:auto;min-height:100vh;padding-bottom:88px}
+header{padding:15px 17px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:rgba(8,11,10,.96);position:sticky;top:0;z-index:5;backdrop-filter:blur(12px)}
+.logo{width:44px;height:44px;border:2px solid var(--green);border-radius:12px;color:var(--green);display:grid;place-items:center;font-weight:900;font-size:21px;box-shadow:0 0 18px #35efa033}
+.brand{font-weight:900;letter-spacing:2px}.brand span{color:var(--green)}.tagline{color:var(--muted);font-size:9px;letter-spacing:1.5px;margin-top:4px}
+main{padding:15px}.page{display:none}.page.active{display:block}h1{font-size:26px;margin:8px 0}h2{font-size:18px;margin:0 0 12px}h3{font-size:14px;margin:0 0 7px}
+p{color:var(--muted);font-size:13px;line-height:1.55}.eyebrow{color:var(--green);font-size:10px;font-weight:bold;letter-spacing:2px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:15px;margin:13px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat{background:var(--panel2);border-radius:12px;padding:14px;min-width:0}.stat strong{display:block;font-size:21px;color:var(--green);overflow-wrap:anywhere}.stat small{color:var(--muted);font-size:10px}
+.field{margin:13px 0}label{display:block;color:#c8d5cd;font-size:12px;margin-bottom:7px}
+input,select{width:100%;background:#0b100d;color:var(--text);border:1px solid var(--border);border-radius:9px;padding:12px;outline:none}input:focus,select:focus{border-color:var(--green)}
+.btn{display:block;width:100%;border:0;border-radius:10px;padding:13px;margin-top:9px;background:var(--green);color:#06140d;font-weight:800}.btn.secondary{background:var(--panel2);border:1px solid var(--border);color:var(--green)}.btn.danger{background:#321919;color:#ffaaaa}
+.notice{background:#15251d;border:1px solid #28583f;border-radius:10px;padding:12px;color:#b8f5d2;font-size:12px;line-height:1.5;margin:12px 0}.warning{background:#2b2112;border-color:#6d5524;color:#f5d58f}
+.exercise{background:#101713;border:1px solid var(--border);border-radius:12px;padding:13px;margin:10px 0}.exercise-head{display:flex;justify-content:space-between;gap:10px}.exercise-name{font-size:14px;font-weight:bold}.pill{color:var(--green);background:#173528;border-radius:20px;padding:5px 8px;font-size:9px;height:max-content}.meta{color:var(--green);font-size:11px}
+.timer-display{text-align:center;font-size:54px;font-weight:900;color:var(--green);padding:20px 0;font-variant-numeric:tabular-nums}.timer-controls{display:flex;gap:8px}.timer-controls button{flex:1}
+.bar{height:7px;background:#29382f;border-radius:20px;overflow:hidden}.bar div{width:0%;height:100%;background:var(--green);transition:width .2s}
+.empty{text-align:center;padding:25px;color:var(--muted)}.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:10;background:#0c120f;border-top:1px solid var(--border);padding:7px 2px max(7px,env(safe-area-inset-bottom))}
+.nav-inner{max-width:900px;margin:auto;display:flex;justify-content:space-around}.nav-btn{background:none;border:0;color:var(--muted);font-size:9px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:5px 2px}.nav-btn span{font-size:18px}.nav-btn.active{color:var(--green)}
+a.btn{display:block;text-align:center;text-decoration:none}.muted{color:var(--muted)}footer{text-align:center;padding:20px;color:#68776e;font-size:10px}
+@media(max-width:420px){main{padding:12px}.timer-display{font-size:45px}.nav-btn{font-size:8px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">CX</div><div><div class="brand">CALISTHEN<span>IX</span></div><div class="tagline">BUILD CONTROL. BUILD STRENGTH.</div></div></header>
+<main>
+<section class="page active" id="home">
+<div class="eyebrow">YOUR TRAINING HQ</div><h1>Welcome back.</h1><p>Train with purpose. Progress with patience.</p>
+<div class="grid"><div class="stat"><strong id="homeGoal">—</strong><small>PRIMARY GOAL</small></div><div class="stat"><strong id="homeSessions">0</strong><small>SESSIONS COMPLETED</small></div></div>
+<div class="card"><div class="eyebrow">YOUR PROGRAMME</div><h2 id="homeTitle">Start your assessment</h2><p id="homeDescription">Choose your goals and training level to build a starting plan.</p><button class="btn" onclick="showPage('assess')">START ASSESSMENT</button><button class="btn secondary" onclick="showPage('plan')">VIEW MY PLAN</button></div>
+<div class="card"><h2>Training principles</h2><p>• Good technique before more repetitions.</p><p>• Leave recovery time between demanding sessions.</p><p>• Use stable equipment and suitable supervision.</p><p>• Stop if you experience pain, dizziness or loss of control.</p></div>
+<div class="card"><h2>Online coaching</h2><p>Explore coaching information and send an enquiry with an adult's help.</p><button class="btn secondary" onclick="showPage('coaching')">EXPLORE COACHING</button></div>
+</section>
+
+<section class="page" id="assess">
+<div class="eyebrow">STEP 01 / PERSONALISE</div><h1>Build your profile.</h1><p>Enter abilities you can already perform comfortably. Do not test to exhaustion just to fill this in.</p>
+<div class="card"><h2>Your goals</h2>
+<div class="field"><label>Primary goal</label><select id="primary"><option>Handstand</option><option>Handstand Push-up</option><option>Planche</option><option>Front Lever</option><option>Muscle-up</option><option>General Strength</option></select></div>
+<div class="field"><label>Secondary goal</label><select id="secondary"><option>Planche</option><option>Handstand</option><option>Handstand Push-up</option><option>Front Lever</option><option>Muscle-up</option><option>General Strength</option><option>None</option></select></div>
+<div class="field"><label>Training days available</label><select id="days"><option value="2">2 days</option><option value="3" selected>3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option><option value="7">7 days</option></select></div></div>
+<div class="card"><h2>Strength foundation</h2>
+<div class="field"><label>Comfortable push-ups</label><input id="pushups" type="number" min="0" max="100" placeholder="Optional"></div>
+<div class="field"><label>Comfortable pull-ups</label><input id="pullups" type="number" min="0" max="50" placeholder="Optional"></div>
+<div class="field"><label>Comfortable dips</label><input id="dips" type="number" min="0" max="50" placeholder="Optional"></div>
+<div class="field"><label>Comfortable plank hold (seconds)</label><input id="plank" type="number" min="0" max="300" placeholder="Optional"></div></div>
+<div class="card"><h2>Skill levels</h2>
+<div class="field"><label>Handstand level</label><select id="handstandLevel"><option value="beginner">Beginner</option><option value="advanced">Confident wall / balance practice</option></select></div>
+<div class="field"><label>Handstand push-up level</label><select id="hspuLevel"><option value="beginner">Beginner foundation</option><option value="advanced">Currently practising wall HSPU</option></select></div>
+<div class="field"><label>Planche level</label><select id="planche"><option value="beginner">Beginner foundation</option><option value="tuck">Tuck planche</option><option value="advanced">Advanced tuck planche</option><option value="straddle">Straddle planche</option><option value="full">Full planche</option></select></div>
+<div class="field"><label>Front lever level</label><select id="frontlever"><option value="beginner">Beginner foundation</option><option value="tuck">Tuck front lever</option><option value="advanced">Advanced tuck front lever</option><option value="oneleg">One-leg front lever</option><option value="straddle">Straddle front lever</option></select></div>
+<div class="notice warning">Select only skills you can already perform with controlled technique. Advanced planche and front-lever progressions need qualified coaching, suitable equipment and appropriate supervision. This assessment does not certify readiness.</div></div>
+<div class="card"><h2>Equipment and safety</h2>
+<div class="field"><label>Equipment available</label><select id="equipment"><option value="bodyweight">Bodyweight / floor space</option><option value="bar">Secure pull-up bar</option><option value="parallettes">Stable parallettes</option><option value="both">Secure bar and parallettes</option><option value="barband">Secure bar and suitable resistance band</option><option value="bothband">Secure bar, parallettes and suitable resistance band</option></select></div>
+<div class="field"><label>Current pain or injury affecting training?</label><select id="pain"><option value="no">No</option><option value="yes">Yes</option><option value="unsure">Unsure</option></select></div>
+<div class="notice warning">If you have pain or an injury, pause movements affecting that area. Tell a trusted adult and seek advice from a qualified healthcare professional before returning to those movements.</div>
+<button class="btn" onclick="generatePlan()">GENERATE MY PLAN</button></div>
+</section>
+
+<section class="page" id="plan"><div class="eyebrow">STEP 02 / PROGRAMME</div><h1>My training plan.</h1><p id="planIntro">Complete your assessment to generate a starting plan.</p><div id="workoutContainer" class="empty">No plan generated yet.</div><button class="btn" id="completeBtn" style="display:none" onclick="logSession()">LOG COMPLETED SESSION</button></section>
+
+<section class="page" id="library"><div class="eyebrow">MOVEMENT DATABASE</div><h1>Exercise library.</h1><p>Reference progressions and technique reminders. Choose an appropriate level, not the hardest level listed.</p><div id="libraryContainer"></div></section>
+
+<section class="page" id="timer"><div class="eyebrow">TRAINING TOOL</div><h1>Rest timer.</h1><div class="card"><div class="timer-display" id="timerDisplay">01:30</div><div class="bar"><div id="timerBar"></div></div><div class="field"><label>Timer seconds</label><input id="timerInput" type="number" min="1" max="3600" value="90"></div><div class="timer-controls"><button class="btn" onclick="startTimer()">START</button><button class="btn secondary" onclick="pauseTimer()">PAUSE</button><button class="btn secondary" onclick="resetTimer()">RESET</button></div><div class="timer-controls"><button class="btn secondary" onclick="addTime(15)">+15 SEC</button><button class="btn secondary" onclick="addTime(30)">+30 SEC</button></div><p id="timerStatus">Ready.</p></div><div class="card"><h2>Quick presets</h2><button class="btn secondary" onclick="setTimer(30)">30 seconds</button><button class="btn secondary" onclick="setTimer(60)">60 seconds</button><button class="btn secondary" onclick="setTimer(90)">90 seconds</button><button class="btn secondary" onclick="setTimer(120)">120 seconds</button></div></section>
+
+<section class="page" id="progress"><div class="eyebrow">YOUR JOURNEY</div><h1>Progress tracker.</h1><div class="grid"><div class="stat"><strong id="progressSessions">0</strong><small>SESSIONS COMPLETED</small></div><div class="stat"><strong id="progressGoal">—</strong><small>PRIMARY GOAL</small></div></div><div class="card"><h2>Session history</h2><div id="history">No sessions logged yet.</div></div><div class="card"><button class="btn secondary" onclick="exportData()">EXPORT MY DATA</button><button class="btn danger" onclick="clearData()">RESET APP DATA</button></div></section>
+
+<section class="page" id="coaching"><div class="eyebrow">CALISTHENIX COACHING</div><h1>Your journey. Personally guided.</h1><p>Coaching enquiries, availability and services should be confirmed directly with the adult managing the coaching account.</p>
+<div class="card"><h2>What coaching may include</h2><div class="exercise"><h3>Personalised training plan</h3><p>A plan based on goals, experience, schedule, equipment and current ability.</p></div><div class="exercise"><h3>Technique and progress guidance</h3><p>Guidance on suitable practice, form questions and sensible progression.</p></div><div class="exercise"><h3>Progress reviews</h3><p>Review training notes and discuss adjustments where appropriate.</p></div><div class="notice warning">Calls, video reviews, response times and coaching availability must be confirmed before anyone pays. Coaching is not a substitute for qualified in-person supervision for advanced skills.</div></div>
+<div class="card"><div class="eyebrow">COACHING ENQUIRY</div><h2>Contact the account manager</h2><p>Use the official Instagram page to ask about current availability, exact services, terms and payment arrangements. Ask a parent or trusted adult to handle enquiries and payments.</p><a class="btn" href="https://www.instagram.com/zubiinthevoid/" target="_blank" rel="noopener">OPEN INSTAGRAM ↗</a></div></section>
+<footer>CALISTHENIX • BUILD CONTROL. BUILD STRENGTH.</footer>
+</main>
+<nav class="bottom-nav"><div class="nav-inner">
+<button class="nav-btn active" onclick="showPage('home',this)"><span>⌂</span>Home</button><button class="nav-btn" onclick="showPage('assess',this)"><span>◈</span>Assess</button><button class="nav-btn" onclick="showPage('plan',this)"><span>▤</span>Plan</button><button class="nav-btn" onclick="showPage('library',this)"><span>▦</span>Library</button><button class="nav-btn" onclick="showPage('timer',this)"><span>◷</span>Timer</button><button class="nav-btn" onclick="showPage('coaching',this)"><span>✦</span>Coach</button><button class="nav-btn" onclick="showPage('progress',this)"><span>↗</span>Progress</button>
+</div></nav>
+</div>
+<script>
+"use strict";
+const PROFILE_KEY="calx-profile-v2",HISTORY_KEY="calx-history-v2";
+let profile=safeRead(PROFILE_KEY,null),history=safeRead(HISTORY_KEY,[]);
+let timerInterval=null,timerRemaining=90,timerTotal=90;
+function safeRead(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
+function save(){localStorage.setItem(PROFILE_KEY,JSON.stringify(profile));localStorage.setItem(HISTORY_KEY,JSON.stringify(history))}
+function showPage(id,btn){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));if(btn)btn.classList.add("active");else{const ids=["home","assess","plan","library","timer","coaching","progress"];document.querySelectorAll(".nav-btn")[ids.indexOf(id)]?.classList.add("active")}if(id==="home")updateHome();if(id==="plan")renderPlan();if(id==="progress")updateProgress();if(id==="library")renderLibrary()}
+function readProfile(){return {primary:primary.value,secondary:secondary.value,days:Number(days.value),pushups:Number(pushups.value)||0,pullups:Number(pullups.value)||0,dips:Number(dips.value)||0,plank:Number(plank.value)||0,handstand:handstandLevel.value,hspu:hspuLevel.value,planche:planche.value,frontlever:frontlever.value,equipment:equipment.value,pain:pain.value}}
+const plancheLevels=["Beginner foundation","Tuck planche","Advanced tuck planche","Straddle planche","Full planche"];
+const frontLevels=["Beginner foundation","Tuck front lever","Advanced tuck front lever","One-leg front lever","Straddle front lever"];
+function progressionExercises(){const p=profile;let a=[];
+a.push({name:"Gentle warm-up",sets:"5–8 min",rest:"As needed",note:"Gentle wrist preparation, shoulder circles, comfortable shoulder mobility and easy whole-body movement. No forced ranges."});
+if(p.primary==="Planche"||p.secondary==="Planche"){const map={beginner:[["Planche lean (easy)", "2 × 5–8 sec"],["Incline push-ups","2 × 6–10"]],tuck:[["Planche lean","2 × 6–10 sec"],["Tuck planche practice","2 × 2–5 sec"],["Pseudo-planche push-up (easy range)","2 × 5–8"]],advanced:[["Tuck planche practice","2 × 3–5 sec"],["Advanced tuck exposure only if coach-approved","1–2 × 2–3 sec"],["Controlled push-up variation","2 × 5–8"]],straddle:[["Advanced tuck practice","2 × 2–4 sec"],["Straddle planche only with qualified coach","Coach-prescribed"],["Easy pushing strength","2 × 5–8"]],full:[["Coach-supervised progression only","Coach-prescribed"]]};(map[p.planche]||map.beginner).forEach(x=>a.push({name:x[0],sets:x[1],rest:"90–150 sec",note:"Keep effort controlled; stop well before form breaks. Advanced stages require qualified supervision."}))}
+if(p.primary==="Front Lever"||p.secondary==="Front Lever"){const map={beginner:[["Scapular pull-up (if secure bar available)","2 × 5"],["Body row / supported row","2 × 6–8"]],tuck:[["Scapular pull-up","2 × 5"],["Tuck front lever technique","2 × 2–4 sec"],["Rows","2 × 6–8"]],advanced:[["Tuck front lever","2 × 2–4 sec"],["Advanced tuck only with coach approval","1–2 × 2 sec"],["Rows","2 × 6–8"]],oneleg:[["Coach-assessed one-leg progression","Coach-prescribed"],["Easy rows","2 × 6–8"]],straddle:[["Coach-supervised straddle progression","Coach-prescribed"],["Easy rows","2 × 6–8"]]};(map[p.frontlever]||map.beginner).forEach(x=>a.push({name:x[0],sets:x[1],rest:"90–150 sec",note:"Use only a stable, purpose-built bar. Avoid swinging and stop if shoulder or elbow discomfort occurs."}))}
+if(p.primary==="Handstand"||p.secondary==="Handstand")a.push({name:"Wall-facing handstand line drill (only if safe)",sets:"2 × 10–20 sec",rest:"60–90 sec",note:"Use a clear space and suitable supervision. End before balance or shoulder control deteriorates."});
+if(p.primary==="Handstand Push-up"||p.secondary==="Handstand Push-up")a.push({name:"Pike push-up variation",sets:"2 × 5–8",rest:"90–120 sec",note:"Choose an easy range. No deep or unsupported attempts without qualified coaching."});
+if(p.primary==="Muscle-up"||p.secondary==="Muscle-up")a.push({name:"Pull-up foundation / supported row",sets:"2 × 5–8",rest:"90–120 sec",note:"Use only a securely installed bar. Muscle-up attempts are not part of this starter plan."});
+a.push({name:"Push-ups (comfortable variation)",sets:"2 × 5–10",rest:"90 sec",note:"Smooth reps; stop before technique changes."});
+if(p.equipment!=="bodyweight")a.push({name:"Supported rows (secure setup only)",sets:"2 × 5–8",rest:"90 sec",note:"Only use equipment that is correctly installed and checked by an adult."});
+a.push({name:"Dead bug or easy plank",sets:"2 × 10–20 sec",rest:"60 sec",note:"Breathe normally and keep the movement controlled."});
+return a}
+function generatePlan(){profile=readProfile();save();if(profile.pain!=="no"){alert("Because you selected current pain or unsure, this app will not generate skill training. Please pause painful movements and speak with a trusted adult and healthcare professional.");document.getElementById("planIntro").textContent="Plan paused: resolve the pain/injury question with appropriate adult and professional guidance first.";document.getElementById("workoutContainer").innerHTML='<div class="notice warning">No workout generated while pain or injury is reported as present or uncertain.</div>';document.getElementById("completeBtn").style.display="none";showPage("plan");return}renderPlan();showPage("plan")}
+function renderPlan(){if(!profile){document.getElementById("workoutContainer").innerHTML="Complete your assessment first.";return}document.getElementById("planIntro").textContent="Starting template for "+profile.primary+" with "+profile.days+" available training days. Repeat only with recovery between sessions.";let items=progressionExercises();document.getElementById("workoutContainer").innerHTML=items.map((x,i)=>'<div class="exercise"><div class="exercise-head"><div class="exercise-name">'+(i+1)+". "+esc(x.name)+'</div><span class="pill">'+esc(x.sets)+'</span></div><div class="meta">Rest: '+esc(x.rest)+'</div><p>'+esc(x.note)+'</p></div>').join("")+'<div class="notice">This is a conservative starting template, not a medical or coaching assessment. Adjust with a qualified coach and trusted adult.</div>';document.getElementById("completeBtn").style.display="block"}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function logSession(){history.unshift({date:new Date().toLocaleDateString(),goal:profile?.primary||"Training"});history=history.slice(0,100);save();updateProgress();alert("Session logged. Nice work prioritising consistency and recovery.")}
+function updateHome(){document.getElementById("homeGoal").textContent=profile?.primary||"—";document.getElementById("homeSessions").textContent=history.length;document.getElementById("homeTitle").textContent=profile?"Your "+profile.primary+" template is ready":"Start your assessment";document.getElementById("homeDescription").textContent=profile?"Your saved starting plan is available in the Plan tab.":"Choose your goals and current level to build a conservative starting plan."}
+function updateProgress(){document.getElementById("progressSessions").textContent=history.length;document.getElementById("progressGoal").textContent=profile?.primary||"—";document.getElementById("history").innerHTML=history.length?history.map(h=>'<p>'+esc(h.date)+' — '+esc(h.goal)+'</p>').join(""):"No sessions logged yet."}
+const libraryItems=[
+["Planche foundation","Planche lean, incline push-up, scapular control","Start with comfortable leaning and basic pushing strength."],
+["Tuck planche","Tuck planche technique, planche lean","Only practise if already controlled and pain-free."],
+["Advanced tuck planche","Advanced tuck exposure","Coach-assessed progression; not a required next step."],
+["Straddle / full planche","Advanced static holds","Qualified coaching and suitable equipment required."],
+["Front lever foundation","Rows, scapular pull-ups","Use only a secure, correctly installed bar."],
+["Tuck front lever","Tuck front lever technique","Short, controlled exposures; no swinging."],
+["Advanced tuck front lever","Advanced tuck exposure","Coach-assessed progression."],
+["One-leg / straddle front lever","Advanced lever progressions","Qualified supervision and appropriate strength assessment required."],
+["Handstand","Wall line drills and balance basics","Practise in a clear area with suitable supervision."],
+["HSPU foundation","Pike push-up variations","Use an easy range and avoid painful or uncontrolled reps."],
+["Core","Dead bug, plank","Breathe normally and maintain control."]
+];
+function renderLibrary(){document.getElementById("libraryContainer").innerHTML=libraryItems.map(x=>'<div class="exercise"><h3>'+esc(x[0])+'</h3><div class="meta">'+esc(x[1])+'</div><p>'+esc(x[2])+'</p></div>').join("")}
+function updateTimer(){let m=Math.floor(timerRemaining/60),s=timerRemaining%60;document.getElementById("timerDisplay").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");document.getElementById("timerBar").style.width=(timerTotal?100*(timerTotal-timerRemaining)/timerTotal:0)+"%"}
+function setTimer(s){pauseTimer();timerTotal=timerRemaining=s;document.getElementById("timerInput").value=s;document.getElementById("timerStatus").textContent="Ready.";updateTimer()}
+function startTimer(){if(timerInterval)return;if(timerRemaining<=0)setTimer(Number(timerInput.value)||90);timerInterval=setInterval(()=>{timerRemaining=Math.max(0,timerRemaining-1);updateTimer();if(timerRemaining===0){pauseTimer();document.getElementById("timerStatus").textContent="Rest complete.";navigator.vibrate?.(150)}},1000);document.getElementById("timerStatus").textContent="Timer running."}
+function pauseTimer(){if(timerInterval){clearInterval(timerInterval);timerInterval=null}document.getElementById("timerStatus").textContent="Paused."}
+function resetTimer(){pauseTimer();setTimer(Math.max(1,Math.min(3600,Number(timerInput.value)||90)))}
+function addTime(n){timerRemaining=Math.min(3600,timerRemaining+n);timerTotal=Math.max(timerTotal,timerRemaining);updateTimer()}
+function exportData(){const blob=new Blob([JSON.stringify({profile,history},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="calisthenix-progress.json";a.click();URL.revokeObjectURL(a.href)}
+function clearData(){if(confirm("Reset your saved profile and session history on this device?")){localStorage.removeItem(PROFILE_KEY);localStorage.removeItem(HISTORY_KEY);profile=null;history=[];updateHome();updateProgress();alert("Local app data reset.")}}
+updateHome();updateProgress();renderLibrary();updateTimer();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(e=>console.log("Service worker registration failed",e)))}
+</script>
+</body>
+</html>
